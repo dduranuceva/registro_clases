@@ -1,2 +1,16 @@
 # registro_clases
-Aplicación móvil en Flutter para registrar la asistencia a clases. El proyecto se desarrolla de forma iterativa, abordando un tema nuevo cada semana, e incluirá módulos como reportes, autenticación, base de datos y notificaciones, aplicando buenas prácticas de desarrollo.
+
+A new Flutter project.
+
+## Getting Started
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
