@@ -32,6 +32,7 @@ final GoRouter appRouter = GoRouter(
     //!Ruta para el ciclo de vida
     GoRoute(
       path: '/ciclo_vida',
+      name: 'ciclo_vida',
       builder: (context, state) => const CicloVidaScreen(),
     ),
   ],

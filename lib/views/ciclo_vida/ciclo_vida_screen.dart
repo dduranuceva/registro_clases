@@ -53,7 +53,7 @@ class CicloVidaScreenState extends State<CicloVidaScreen> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: actualizarTexto,
-              child: const Text("Actualizar Texto"),
+              child: const Text("Actualizar"),
             ),
           ],
         ),

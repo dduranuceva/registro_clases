@@ -5,7 +5,7 @@ class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color.fromARGB(255, 20, 83, 165), // Color semilla
+        seedColor: const Color.fromARGB(255, 29, 23, 202), // Color semilla
         brightness: Brightness.light, // Tema claro
       ),
       useMaterial3: true,

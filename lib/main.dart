@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // build es un metodo que se ejecuta cada vez que se necesita redibujar la pantalla
     //go_router para navegacion
     return MaterialApp.router(
       theme:
