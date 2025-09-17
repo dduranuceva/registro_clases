@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2025-09-15T00:00:00.000Z" agent="DrawIO" etag="flutter-app-flow" version="21.7.5">
+  <diagram id="flutter-app-architecture" name="Flutter App Flow">
+    <mxGraphModel dx="1422" dy="765" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Main Entry Point -->
+        <mxCell id="main-dart" value="main.dart&#xa;runApp(MyApp())" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontWeight=bold;" vertex="1" parent="1">
+          <mxGeometry x="480" y="40" width="140" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- MyApp Widget -->
+        <mxCell id="my-app" value="MyApp&#xa;MaterialApp.router" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="480" y="150" width="140" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- AppTheme -->
+        <mxCell id="app-theme" value="AppTheme&#xa;lightTheme" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="260" y="150" width="140" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- AppRouter -->
+        <mxCell id="app-router" value="AppRouter&#xa;GoRouter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="700" y="150" width="140" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Routes -->
+        <mxCell id="routes-container" value="Routes" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=1;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="580" y="260" width="360" height="200" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="home-route" value="/ → HomeScreen" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="routes-container">
+          <mxGeometry y="26" width="360" height="26" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="params-route" value="/paso_parametros → PasoParametrosScreen" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="routes-container">
+          <mxGeometry y="52" width="360" height="26" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="detail-route" value="/detalle/:parametro/:metodo → DetalleScreen" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="routes-container">
+          <mxGeometry y="78" width="360" height="26" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="ciclo-route" value="/ciclo_vida → CicloVidaScreen" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="routes-container">
+          <mxGeometry y="104" width="360" height="26" as="geometry" />
+        </mxCell>
+        
+        <!-- Screen Components -->
+        <mxCell id="home-screen" value="HomeScreen&#xa;Scaffold + AppBar + CustomDrawer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="40" y="520" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="paso-params-screen" value="PasoParametrosScreen&#xa;StatefulWidget + BaseView" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="280" y="520" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="detalle-screen" value="DetalleScreen&#xa;Recibe parámetros" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="520" y="520" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="ciclo-vida-screen" value="CicloVidaScreen&#xa;StatefulWidget + BaseView" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="760" y="520" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Widgets -->
+        <mxCell id="base-view" value="BaseView&#xa;Scaffold + AppBar + CustomDrawer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="40" y="680" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="custom-drawer" value="CustomDrawer&#xa;Drawer + Navigation Menu" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="280" y="680" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrows/Connections -->
+        <!-- Main flow -->
+        <mxCell id="main-to-myapp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="main-dart" target="my-app">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Theme connection -->
+        <mxCell id="theme-to-myapp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" edge="1" parent="1" source="app-theme" target="my-app">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Router connection -->
+        <mxCell id="router-to-myapp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" edge="1" parent="1" source="app-router" target="my-app">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Router to Routes -->
+        <mxCell id="router-to-routes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="app-router" target="routes-container">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Routes to Screens -->
+        <mxCell id="routes-to-home" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="routes-container" target="home-screen">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="routes-to-params" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="routes-container" target="paso-params-screen">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="routes-to-detail" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="routes-container" target="detalle-screen">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="routes-to-ciclo" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="routes-container" target="ciclo-vida-screen">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Screens to Widgets -->
+        <mxCell id="home-to-drawer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;dashed=1;" edge="1" parent="1" source="home-screen" target="custom-drawer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="params-to-base" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" edge="1" parent="1" source="paso-params-screen" target="base-view">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="ciclo-to-base" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;dashed=1;" edge="1" parent="1" source="ciclo-vida-screen" target="base-view">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="base-to-drawer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" edge="1" parent="1" source="base-view" target="custom-drawer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Navigation flow from params to detail -->
+        <mxCell id="params-to-detail" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#ff6600;strokeWidth=2;" edge="1" parent="1" source="paso-params-screen" target="detalle-screen">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Legend -->
+        <mxCell id="legend-title" value="Leyenda:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontWeight=bold;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="40" width="100" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-solid" value="Flujo principal" style="text;html=1;strokeColor=#000000;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="70" width="100" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-dashed" value="Dependencias/Uso" style="text;html=1;strokeColor=#000000;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="100" width="130" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="legend-orange" value="Navegación con parámetros" style="text;html=1;strokeColor=#ff6600;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=#ff6600;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="130" width="160" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- Color Legend -->
+        <mxCell id="color-legend-title" value="Componentes:" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontWeight=bold;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="180" width="120" height="30" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="color-entry" value="Punto de entrada" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="210" width="100" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="color-app" value="App principal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="245" width="100" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="color-theme" value="Tema" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="280" width="100" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="color-router" value="Enrutamiento" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="315" width="100" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="color-screens" value="Pantallas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="350" width="100" height="25" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="color-widgets" value="Widgets" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="385" width="100" height="25" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
