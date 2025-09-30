@@ -4,6 +4,9 @@ import 'package:registro_clases/views/home/home_screen.dart';
 import 'package:registro_clases/views/paso_parametros/detalle_screen.dart';
 import 'package:registro_clases/views/paso_parametros/paso_parametros_screen.dart';
 
+import '../views/future/future_view.dart';
+import '../views/isolate/isolate_view.dart';
+
 final GoRouter appRouter = GoRouter(
   routes: [
     GoRoute(
@@ -34,6 +37,18 @@ final GoRouter appRouter = GoRouter(
       path: '/ciclo_vida',
       name: 'ciclo_vida',
       builder: (context, state) => const CicloVidaScreen(),
+    ),
+    //!Ruta para FUTURE
+    GoRoute(
+      path: '/future',
+      name: 'future',
+      builder: (context, state) => const FutureView(),
+    ),
+    //!Ruta para ISOLATE
+    GoRoute(
+      path: '/isolate',
+      name: 'isolate',
+      builder: (context, state) => const IsolateView(),
     ),
   ],
 );
