@@ -60,7 +60,7 @@ class _IsolateViewState extends State<IsolateView> {
       final puertoReceptor = message[1] as SendPort; // Canal para responder
 
       int counter = 0;
-      for (int i = 1; i <= 10; i++) {
+      for (int i = 1; i <= 100000; i++) {
         counter += i;
         if (kDebugMode) {
           print("Isolate contando: $i");

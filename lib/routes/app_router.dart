@@ -3,6 +3,7 @@ import 'package:registro_clases/views/ciclo_vida/ciclo_vida_screen.dart';
 import 'package:registro_clases/views/home/home_screen.dart';
 import 'package:registro_clases/views/paso_parametros/detalle_screen.dart';
 import 'package:registro_clases/views/paso_parametros/paso_parametros_screen.dart';
+import 'package:registro_clases/views/timer/timer_view.dart';
 
 import '../views/future/future_view.dart';
 import '../views/isolate/isolate_view.dart';
@@ -49,6 +50,12 @@ final GoRouter appRouter = GoRouter(
       path: '/isolate',
       name: 'isolate',
       builder: (context, state) => const IsolateView(),
+    ),
+    //!Ruta para TIMER
+    GoRoute(
+      path: '/timer',
+      name: 'timer',
+      builder: (context, state) => const TimerView(),
     ),
   ],
 );
