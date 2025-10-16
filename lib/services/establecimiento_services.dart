@@ -46,7 +46,7 @@ class EstablecimientoService {
   //!updateEstablecimiento
   /// Actualiza un establecimiento en la API.
   /// Recibe un objeto Establecimiento y un archivo de imagen opcional.
-  /// Devuelve true si la actualización fue exitosa, false en caso contrario.
+  /// Lanza una excepción con el mensaje de error de la API si falla.
   Future<bool> updateEstablecimiento(
     Establecimiento est, {
     File? logoFile,
@@ -72,16 +72,41 @@ class EstablecimientoService {
         body: body,
       );
 
-      return response.statusCode == 200;
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        // Intentar extraer el mensaje de error de la API
+        final errorData = jsonDecode(response.body);
+        String errorMessage = 'Error al actualizar establecimiento';
+
+        // Verificar si hay errores de validación específicos
+        if (errorData['errors'] != null) {
+          final errors = errorData['errors'] as Map<String, dynamic>;
+          // Construir mensaje con todos los errores
+          List<String> errorMessages = [];
+          errors.forEach((field, messages) {
+            if (messages is List) {
+              errorMessages.addAll(messages.cast<String>());
+            }
+          });
+          errorMessage = errorMessages.join('\n');
+        } else if (errorData['message'] != null) {
+          errorMessage = errorData['message'];
+        }
+
+        throw Exception(errorMessage);
+      }
     } catch (e) {
-      throw Exception('Error al actualizar establecimiento: $e');
+      // Si ya es una excepción con mensaje de la API, relanzarla
+      if (e is Exception) rethrow;
+      throw Exception('Error de conexión: $e');
     }
   }
 
   //! createEstablecimiento
   /// Crea un nuevo establecimiento en la API.
   /// Recibe un objeto Establecimiento y un archivo de imagen opcional.
-  /// Devuelve true si la creación fue exitosa, false en caso contrario.
+  /// Lanza una excepción con el mensaje de error de la API si falla.
   Future<bool> createEstablecimiento(
     Establecimiento est, {
     File? logoFile,
@@ -103,9 +128,34 @@ class EstablecimientoService {
         body: body,
       );
 
-      return response.statusCode == 201;
+      if (response.statusCode == 201) {
+        return true;
+      } else {
+        // Intentar extraer el mensaje de error de la API
+        final errorData = jsonDecode(response.body);
+        String errorMessage = 'Error al crear establecimiento';
+
+        // Verificar si hay errores de validación específicos
+        if (errorData['errors'] != null) {
+          final errors = errorData['errors'] as Map<String, dynamic>;
+          // Construir mensaje con todos los errores
+          List<String> errorMessages = [];
+          errors.forEach((field, messages) {
+            if (messages is List) {
+              errorMessages.addAll(messages.cast<String>());
+            }
+          });
+          errorMessage = errorMessages.join('\n');
+        } else if (errorData['message'] != null) {
+          errorMessage = errorData['message'];
+        }
+
+        throw Exception(errorMessage);
+      }
     } catch (e) {
-      throw Exception('Error al crear establecimiento: $e');
+      // Si ya es una excepción con mensaje de la API, relanzarla
+      if (e is Exception) rethrow;
+      throw Exception('Error de conexión: $e');
     }
   }
 

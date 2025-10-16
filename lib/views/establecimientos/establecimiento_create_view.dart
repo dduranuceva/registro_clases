@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:registro_clases/models/establecimiento.dart';
 import 'package:registro_clases/services/establecimiento_services.dart';
+import 'widgets/establecimiento_form.dart';
 
+/// Vista para crear un nuevo establecimiento
+/// Utiliza el widget reutilizable EstablecimientoForm
 class EstablecimientoCreateView extends StatefulWidget {
   const EstablecimientoCreateView({super.key});
 
@@ -15,65 +17,71 @@ class EstablecimientoCreateView extends StatefulWidget {
 }
 
 class _EstablecimientoCreateViewState extends State<EstablecimientoCreateView> {
-  final _formKey = GlobalKey<FormState>();
+  //! Instancia del servicio para comunicarse con la API
   final _service = EstablecimientoService();
 
-  late TextEditingController _nombreController;
-  late TextEditingController _nitController;
-  late TextEditingController _direccionController;
-  late TextEditingController _telefonoController;
+  //! Variable para controlar el estado de carga durante el envío
+  bool _isSubmitting = false;
 
-  File? _logoFile;
+  //! Método que se ejecuta cuando el formulario es enviado
+  /// Recibe el establecimiento y la imagen directamente del formulario
+  Future<void> _handleSubmit(
+    Establecimiento establecimiento,
+    File? logoFile,
+  ) async {
+    // Activar estado de carga
+    setState(() => _isSubmitting = true);
 
-  @override
-  void initState() {
-    super.initState();
-    _nombreController = TextEditingController();
-    _nitController = TextEditingController();
-    _direccionController = TextEditingController();
-    _telefonoController = TextEditingController();
-  }
-
-  //! pickImage se utiliza para seleccionar una imagen de la galería
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 80,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        _logoFile = File(pickedFile.path);
-      });
-    }
-  }
-
-  //! submit se utiliza para enviar los datos del formulario
-  Future<void> _submit() async {
-    if (_formKey.currentState!.validate()) {
-      final est = Establecimiento(
-        id: 0,
-        nombre: _nombreController.text,
-        nit: _nitController.text,
-        direccion: _direccionController.text,
-        telefono: _telefonoController.text,
-        logo: '',
-        estado: 'A',
+    try {
+      //! Llamar al servicio para crear el establecimiento
+      final success = await _service.createEstablecimiento(
+        establecimiento,
+        logoFile: logoFile,
       );
-
-      final ok = await _service.createEstablecimiento(est, logoFile: _logoFile);
 
       if (!mounted) return;
 
-      if (ok) {
+      if (success) {
+        //! Mostrar mensaje de éxito
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Establecimiento creado correctamente')),
+          const SnackBar(
+            content: Text('✅ Establecimiento creado correctamente'),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 3),
+          ),
         );
+        //! Volver a la pantalla anterior y notificar que hubo cambios
         context.pop(true);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al crear establecimiento')),
-        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+
+      //! Extraer el mensaje de error limpio
+      String errorMessage = e.toString();
+      // Remover "Exception: " del inicio si existe
+      if (errorMessage.startsWith('Exception: ')) {
+        errorMessage = errorMessage.substring(11);
+      }
+
+      //! Mostrar el mensaje de error específico de la API
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(' $errorMessage'),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 5),
+          action: SnackBarAction(
+            label: 'X',
+            textColor: Colors.white,
+            onPressed: () {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            },
+          ),
+        ),
+      );
+    } finally {
+      //! Desactivar estado de carga
+      if (mounted) {
+        setState(() => _isSubmitting = false);
       }
     }
   }
@@ -81,56 +89,17 @@ class _EstablecimientoCreateViewState extends State<EstablecimientoCreateView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Nuevo Establecimiento')),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              TextFormField(
-                controller: _nombreController,
-                decoration: const InputDecoration(labelText: 'Nombre'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Campo obligatorio' : null,
-              ),
-              TextFormField(
-                controller: _nitController,
-                decoration: const InputDecoration(labelText: 'NIT'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Campo obligatorio' : null,
-              ),
-              TextFormField(
-                controller: _direccionController,
-                decoration: const InputDecoration(labelText: 'Dirección'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Campo obligatorio' : null,
-              ),
-              TextFormField(
-                controller: _telefonoController,
-                decoration: const InputDecoration(labelText: 'Teléfono'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Campo obligatorio' : null,
-              ),
-              const SizedBox(height: 16),
-              const Text('Logo:'),
-              const SizedBox(height: 8),
-              _logoFile != null
-                  ? Image.file(_logoFile!, height: 120)
-                  : const Text('No se ha seleccionado logo'),
-              TextButton.icon(
-                onPressed: _pickImage,
-                icon: const Icon(Icons.image),
-                label: const Text('Seleccionar logo'),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _submit,
-                child: const Text('Crear Establecimiento'),
-              ),
-            ],
-          ),
-        ),
+      appBar: AppBar(
+        title: const Text('Nuevo Establecimiento'),
+        centerTitle: true,
+      ),
+      //! Usar el widget reutilizable del formulario
+      body: EstablecimientoForm(
+        initial: null, // No hay datos iniciales (es creación)
+        logoUrl: null, // No hay logo previo
+        baseUrlImg: _service.baseUrlImg,
+        onSubmit: _handleSubmit,
+        isSubmitting: _isSubmitting,
       ),
     );
   }

@@ -24,7 +24,9 @@ class EstablecimientoEliminarView extends StatelessWidget {
           onPressed: () => Navigator.pop(context, true),
           icon: const Icon(Icons.delete),
           label: const Text('Eliminar'),
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromARGB(255, 240, 118, 110),
+          ),
         ),
       ],
     );
