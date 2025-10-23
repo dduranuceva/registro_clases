@@ -17,7 +17,15 @@ class _LoginPageState extends State<LoginPage> {
   final emailCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
   bool isLoading = false;
+  bool obscurePassword = true;
   String? errorMessage;
+
+  @override
+  void dispose() {
+    emailCtrl.dispose();
+    passwordCtrl.dispose();
+    super.dispose();
+  }
 
   void login() async {
     if (!_formKey.currentState!.validate()) return;
@@ -34,17 +42,37 @@ class _LoginPageState extends State<LoginPage> {
       passwordCtrl.text.trim(),
     );
 
-    //* si el servidor devuelve un error, se convierte el objeto a JSON
-    //* y se devuelve el mensaje de error
     setState(() => isLoading = false);
 
-    if (result['success']) {
-      if (!mounted) return;
-      context.go('/establecimientos');
+    if (!mounted) return;
+
+    if (result['success'] == true) {
+      //* Login exitoso, navegar a la página principal
+      context.go('/');
     } else {
+      //* Manejo de errores detallado
+      String displayMessage = result['message'] ?? 'Error al iniciar sesión';
+
+      //* Si hay un error de validación específico, mostrarlo
+      if (result['errorDetail'] != null) {
+        displayMessage = result['errorDetail'];
+      }
+
       setState(() {
-        errorMessage = result['message'] ?? 'Error al iniciar sesión';
+        errorMessage = displayMessage;
       });
+
+      //* Mostrar SnackBar para errores importantes
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(displayMessage),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+            duration: const Duration(seconds: 4),
+          ),
+        );
+      }
     }
   }
 
@@ -70,42 +98,104 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: emailCtrl,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                       labelText: 'Correo electrónico',
                       prefixIcon: Icon(Icons.email),
+                      hintText: 'ejemplo@uceva.edu.co',
                     ),
-                    validator: (value) =>
-                        value!.isEmpty ? 'Ingresa tu correo' : null,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Ingresa tu correo';
+                      }
+                      if (!value.contains('@')) {
+                        return 'Ingresa un correo válido';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
                     controller: passwordCtrl,
-                    obscureText: true,
-                    decoration: const InputDecoration(
+                    obscureText: obscurePassword,
+                    decoration: InputDecoration(
                       labelText: 'Contraseña',
-                      prefixIcon: Icon(Icons.lock),
+                      prefixIcon: const Icon(Icons.lock),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          obscurePassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            obscurePassword = !obscurePassword;
+                          });
+                        },
+                      ),
                     ),
-                    validator: (value) =>
-                        value!.isEmpty ? 'Ingresa tu contraseña' : null,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Ingresa tu contraseña';
+                      }
+                      if (value.length < 8) {
+                        return 'La contraseña debe tener al menos 8 caracteres';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 16),
                   if (errorMessage != null)
-                    Text(
-                      errorMessage!,
-                      style: const TextStyle(color: Colors.red),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.red.shade50,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.red.shade200),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.error_outline, color: Colors.red.shade700),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              errorMessage!,
+                              style: TextStyle(color: Colors.red.shade700),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  const SizedBox(height: 12),
-                  ElevatedButton(
-                    onPressed: isLoading ? null : login,
-                    child: isLoading
-                        ? const CircularProgressIndicator()
-                        : const Text('Ingresar'),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: isLoading ? null : login,
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: isLoading
+                          ? const SizedBox(
+                              height: 24,
+                              width: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Text(
+                              'Ingresar',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                    ),
                   ),
                   const SizedBox(height: 12),
-                  TextButton(
-                    onPressed: () => context.push('/register'),
-                    child: const Text('¿No tienes cuenta? Regístrate'),
-                  ),
                 ],
               ),
             ),
