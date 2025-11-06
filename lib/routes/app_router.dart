@@ -11,10 +11,15 @@ import 'package:registro_clases/views/paso_parametros/detalle_screen.dart';
 import 'package:registro_clases/views/paso_parametros/paso_parametros_screen.dart';
 
 import '../views/auth/login_page.dart';
+import '../views/categorias/categorias_create_view.dart'
+    show CategoriasCreateView;
+import '../views/categorias/categorias_edit_view.dart';
+import '../views/categorias/categorias_list_view.dart' show CategoriasListView;
 import '../views/future/future_view.dart';
 import '../views/isolate/isolate_view.dart';
 import '../views/pokemons/pokemon_detail_view.dart';
 import '../views/pokemons/pokemon_list_view.dart';
+import '../views/provider/change_theme_view.dart';
 
 final GoRouter appRouter = GoRouter(
   routes: [
@@ -123,6 +128,29 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) {
         final id = state.pathParameters['id']!;
         return CategoriaFbFormView(id: id);
+      },
+    ),
+    //!Ruta para el demo de Provider
+    GoRoute(
+      path: '/cambiar-tema',
+      name: 'cambiar-tema',
+      builder: (context, state) => const ChangeThemeView(),
+    ),
+    //! Rutas para el manejo de Categorías (CRUD) sqflite
+    GoRoute(
+      path: '/categorias',
+      name: 'categoriasSqlite',
+      builder: (_, __) => const CategoriasListView(),
+    ),
+    GoRoute(
+      path: '/categorias/create',
+      builder: (context, state) => const CategoriasCreateView(),
+    ),
+    GoRoute(
+      path: '/categorias/edit/:id',
+      builder: (context, state) {
+        final id = int.parse(state.pathParameters['id']!);
+        return CategoriasEditView(id: id);
       },
     ),
   ],
