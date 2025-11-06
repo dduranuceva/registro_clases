@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  //! tema claro
-  static ThemeData get lightTheme {
+  //! Método para obtener el tema claro
+  //! Ahora recibe un color dinámico como parámetro, proveniente del Provider
+  static ThemeData lightTheme(Color seedColor) {
     return ThemeData(
       colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color.fromARGB(255, 29, 23, 202), // Color semilla
+        seedColor: seedColor, //! Color dinámico desde el Provider
         brightness: Brightness.light, // Tema claro
       ),
       useMaterial3: true,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Color.fromARGB(255, 20, 165, 97), // Color del AppBar
-        titleTextStyle: TextStyle(
+        backgroundColor: seedColor, // Color dinámico del AppBar
+        titleTextStyle: const TextStyle(
           color: Colors.white, // Texto blanco para el AppBar
           fontSize: 20,
           fontWeight: FontWeight.bold,
